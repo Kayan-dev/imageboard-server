@@ -1,0 +1,21 @@
+{
+  "development": {
+    "url": "postgres://etchtklx:f1rIFf5KSDZBmgO2HK-Z_IvKn_tYvWoH@dumbo.db.elephantsql.com:5432/etchtklx",
+    "dialect": "postgres",
+    "operatorsAliases": "0"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
