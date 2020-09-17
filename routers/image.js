@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = new Router();
-const bcrypt = require("bcrypt");
+const { toData } = require("../auth/jwt");
 
 const { image: Image } = require("../models");
 
@@ -26,6 +26,28 @@ router.post("/", async (req, res, next) => {
     }
   } catch (e) {
     next(e);
+  }
+});
+
+//Protecting images with JWT & authorization header
+router.get("/auth", async (req, res, next) => {
+  const auth =
+    req.headers.authorization && req.headers.authorization.split(" ");
+  if (auth && auth[0] === "Bearer" && auth[1]) {
+    try {
+      console.log(auth);
+      const data = toData(auth[1]);
+      console.log("What is DATA", data);
+
+      const allImages = await Image.findAll();
+      res.json(allImages);
+    } catch (e) {
+      res.status(400).send("Invalid JWT token");
+    }
+  } else {
+    res.status(401).send({
+      message: "Please supply some valid credentials",
+    });
   }
 });
 

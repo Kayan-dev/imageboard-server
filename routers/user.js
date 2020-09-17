@@ -1,6 +1,7 @@
 const { Router } = require("express");
+const bcrypt = require("bcrypt");
 
-const users = ["Me", "She"];
+const users = ["Me", "he"];
 const router = new Router();
 
 const { user: User } = require("../models");
@@ -17,6 +18,7 @@ router.post("/", async (req, res, next) => {
     } else if (!fullName || fullName === " ") {
       res.status(400).send("Must provide a full name");
     } else {
+      console.log("TESTPASS", password);
       const hashedPassword = bcrypt.hashSync(password, 10);
       const newUser = await User.create({
         email,

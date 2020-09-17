@@ -4,6 +4,7 @@ const secret =
   process.env.JWT_SECRET || "e9rp^&^*&@9sejg)DSUA)jpfds8394jdsfn,m";
 
 function toJWT(data) {
+  // data = { userId: 1 }
   return jwt.sign(data, secret, { expiresIn: "2h" });
 }
 
