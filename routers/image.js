@@ -1,12 +1,17 @@
 const { Router } = require("express");
-
-const images = ["Scenery", "Beaautiful"];
 const router = new Router();
+const bcrypt = require("bcrypt");
 
 const { image: Image } = require("../models");
 
-router.get("/", (req, res, next) => {
-  const images = await Images.findAll();
+// Pagination + findAndCountAll function
+router.get("/", async (req, res, next) => {
+  const limit = Math.min(req.query.limit || 2, 25);
+  const offset = req.query.offset || 1;
+
+  const images = await Image.findAndCountAll({ limit, offset })
+    .then((result) => res.send({ images: result.rows, total: result.count }))
+    .catch((error) => next(error));
   res.json(images);
 });
 

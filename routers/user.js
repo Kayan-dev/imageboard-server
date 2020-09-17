@@ -17,7 +17,12 @@ router.post("/", async (req, res, next) => {
     } else if (!fullName || fullName === " ") {
       res.status(400).send("Must provide a full name");
     } else {
-      const newUser = await User.create({ email, password, fullName });
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const newUser = await User.create({
+        email,
+        password: hashedPassword,
+        fullName,
+      });
       res.json(newUser);
     }
   } catch (e) {
