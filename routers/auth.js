@@ -3,7 +3,7 @@ const { toJWT } = require("../auth/jwt");
 const router = new Router();
 const { user: User } = require("../models");
 const bcrypt = require("bcrypt");
-const authMiddleware = "../auth/middleware";
+const authMiddleware = require("../auth/middleware");
 
 router.get("/test-auth", authMiddleware, (req, res) => {
   res.send({
@@ -40,6 +40,9 @@ router.post("/", async (req, res, next) => {
         jwt,
       });
     } else {
+      console.log("what is password", password);
+      console.log("what is password2", user.password);
+      console.log("Who is user?2", user);
       res.status(400).send({
         message: "Password was incorrect",
       });

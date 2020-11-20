@@ -3,9 +3,10 @@ const router = new Router();
 const { toData } = require("../auth/jwt");
 
 const { image: Image } = require("../models");
+const authMiddleWare = require("../auth/middleware");
 
 // Pagination + findAndCountAll function
-router.get("/", async (req, res, next) => {
+router.get("/", authMiddleWare, async (req, res, next) => {
   const limit = Math.min(req.query.limit || 2, 25);
   const offset = req.query.offset || 1;
 

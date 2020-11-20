@@ -4,10 +4,10 @@ const { toData } = require("./jwt");
 async function auth(req, res, next) {
   // 1. check for authorization header and "split" it.
   console.log(req.headers);
-  const authHeader = req.headers.authorization;
-  const splittedHeader = req.headers.authorization.split(" ");
+  const splittedHeader =
+    req.headers.authorization && req.headers.authorization.split(" ");
   // 2. if authorization header is there, auth type is Bearer and we have something at auth[1] we proceed to check the token.
-  if (authHeader && splittedHeader[0] === "Bearer" && splittedHeader[1]) {
+  if (splittedHeader && splittedHeader[0] === "Bearer" && splittedHeader[1]) {
     //    Remember to try/catch the call to "toData()".
     try {
       const data = toData(splittedHeader[1]);
